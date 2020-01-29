@@ -1,13 +1,13 @@
 ﻿@model ECommerce.Models.Department
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalles";
 }
 
-<h2>Details</h2>
+<h2>Detalles</h2>
 
 <div>
-    <h4>Department</h4>
+    <h4>Departamento</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -21,6 +21,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.DepartmentId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.DepartmentId }, new { @class = "btn btn-warning" }) |
+    @Html.ActionLink("Ver lista", "Index", new { }, new { @class = "btn btn-primary" })
 </p>

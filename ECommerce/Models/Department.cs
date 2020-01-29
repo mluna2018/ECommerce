@@ -13,7 +13,10 @@ namespace ECommerce.Models
 
         [Required(ErrorMessage ="El campo  {0} es requerido.")]
         [MaxLength(50, ErrorMessage ="El campo {0} debe tener maximo {1} caracteres.")]
+        [Display(Name = "Departamento")]
         public string Nombre { get; set; }
+
+        public virtual  ICollection<City> Cities { get; set; }
 
     }
 }
