@@ -39,7 +39,10 @@ namespace ECommerce.Controllers
         // GET: Cities/Create
         public ActionResult Create()
         {
-            ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "Nombre");
+            ViewBag.DepartmentId = new SelectList(db.Departments.OrderBy( 
+                d => d.Nombre), 
+                "DepartmentId", 
+                "Nombre");
             return View();
         }
 
@@ -57,7 +60,11 @@ namespace ECommerce.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "Nombre", city.DepartmentId);
+            ViewBag.DepartmentId = new SelectList(db.Departments.OrderBy(
+                d => d.Nombre), 
+                "DepartmentId", 
+                "Nombre", 
+                city.DepartmentId);
             return View(city);
         }
 
@@ -73,7 +80,11 @@ namespace ECommerce.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "Nombre", city.DepartmentId);
+            ViewBag.DepartmentId = new SelectList(db.Departments.OrderBy(
+                d => d.Nombre),
+                "DepartmentId",
+                "Nombre",
+                city.DepartmentId);
             return View(city);
         }
 
@@ -90,7 +101,11 @@ namespace ECommerce.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "Nombre", city.DepartmentId);
+            ViewBag.DepartmentId = new SelectList(db.Departments.OrderBy(
+                d => d.Nombre),
+                "DepartmentId",
+                "Nombre",
+                city.DepartmentId);
             return View(city);
         }
 
