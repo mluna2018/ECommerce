@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ECommerce.Clases;
 using ECommerce.Models;
 
 namespace ECommerce.Controllers
@@ -39,8 +40,9 @@ namespace ECommerce.Controllers
         // GET: Cities/Create
         public ActionResult Create()
         {
-            ViewBag.DepartmentId = new SelectList(db.Departments.OrderBy( 
-                d => d.Nombre), 
+
+            ViewBag.DepartmentId = new SelectList(
+                CombosHelper.GetDepartments(),
                 "DepartmentId", 
                 "Nombre");
             return View();
@@ -60,8 +62,8 @@ namespace ECommerce.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.DepartmentId = new SelectList(db.Departments.OrderBy(
-                d => d.Nombre), 
+            ViewBag.DepartmentId = new SelectList(
+                CombosHelper.GetDepartments(), 
                 "DepartmentId", 
                 "Nombre", 
                 city.DepartmentId);
@@ -80,8 +82,8 @@ namespace ECommerce.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.DepartmentId = new SelectList(db.Departments.OrderBy(
-                d => d.Nombre),
+            ViewBag.DepartmentId = new SelectList(
+                CombosHelper.GetDepartments(),
                 "DepartmentId",
                 "Nombre",
                 city.DepartmentId);
@@ -101,8 +103,8 @@ namespace ECommerce.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.DepartmentId = new SelectList(db.Departments.OrderBy(
-                d => d.Nombre),
+            ViewBag.DepartmentId = new SelectList(
+                CombosHelper.GetDepartments(),
                 "DepartmentId",
                 "Nombre",
                 city.DepartmentId);

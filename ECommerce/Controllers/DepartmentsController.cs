@@ -111,8 +111,27 @@ namespace ECommerce.Controllers
         {
             Department department = db.Departments.Find(id);
             db.Departments.Remove(department);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null && 
+                    ex.InnerException.InnerException != null &&
+                    ex.InnerException.InnerException.Message.Contains("REFERENCE"))
+                {
+                    ModelState.AddModelError(string.Empty, "El registro no se puede eliminar porque tiene registros relacionados.");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                }
+            }
+
+            return View(department);
+
         }
 
         protected override void Dispose(bool disposing)
