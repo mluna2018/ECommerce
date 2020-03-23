@@ -120,22 +120,26 @@ namespace ECommerce.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserId,UserName,FirstName,LastName,Phone,Address,Photo,DepartmentId,CityId,CompanyId")] User user)
+        public ActionResult Edit( User user)
         {
             if (ModelState.IsValid)
             {
                 if (user.PhotoFile != null)
                 {
-                    var pic = string.Empty;
-                    var folder = "~/Content/Users";
                     var file = string.Format("{0}.jpg", user.UserId);
-                    var response = FilesHelper.UploadPhoto(user.PhotoFile, folder, string.Format("{0}.jpg", user.UserId));
-                    if (response)
-                    {
-                        pic = string.Format("{0}/{1}.jpg", folder, file);
-                        user.Photo = pic;
-                    }
+                    var folder = "~/Content/Users";                    
+                    var response = FilesHelper.UploadPhoto(user.PhotoFile, folder, file);
+                    user.Photo = string.Format("{0}/{1}", folder, file);
                 }
+
+                var db2 = new ECommerceContext();
+                var currentUser = db2.Users.Find(user.UserId);
+                if (currentUser.UserName != user.UserName) 
+                {
+                    UsersHelper.UpdateUserName(currentUser.UserName, user.UserName);
+                }
+                db2.Dispose();
+
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -153,7 +157,7 @@ namespace ECommerce.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            var user = db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -166,9 +170,10 @@ namespace ECommerce.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            User user = db.Users.Find(id);
+            var user = db.Users.Find(id);
             db.Users.Remove(user);
             db.SaveChanges();
+            UsersHelper.DeleteUser(user.UserName);
             return RedirectToAction("Index");
         }
 

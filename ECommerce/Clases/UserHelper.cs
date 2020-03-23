@@ -11,9 +11,53 @@ namespace ECommerce.Clases
 
     public class UsersHelper : IDisposable
     {
+        /// <summary>
+        /// contextos de BDS
+        /// </summary>
         private static ApplicationDbContext userContext = new ApplicationDbContext();
         private static ECommerceContext db = new ECommerceContext();
 
+        /// <summary>
+        /// Metodo para eliminar usuario de la tabla netUser
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public static bool DeleteUser(string userName)
+        {
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(userContext));
+            var serASP = userManager.FindByEmail(userName);
+            if (serASP == null)
+            {
+                return false;
+            }
+            var response = userManager.Delete(serASP);
+           return  response.Succeeded;
+        }
+
+        /// <summary>
+        /// Metodo para Actualizar usuario de la tabla netUser
+        /// </summary>
+        /// <param name="CurrentUserName"></param>
+        /// <param name="newUserName"></param>
+        /// <returns></returns>
+        public static bool UpdateUserName(string CurrentUserName, string newUserName )
+        {
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(userContext));
+            var userASP = userManager.FindByEmail(CurrentUserName);
+            if (userASP == null)
+            {
+                return false;
+            }
+            userASP.UserName = newUserName;
+            userASP.Email = newUserName;
+            var response = userManager.Update(userASP);
+            return response.Succeeded;
+        }
+
+        /// <summary>
+        /// Valida el Rol si no existe lo crea
+        /// </summary>
+        /// <param name="roleName"></param>
         public static void CheckRole(string roleName)
         {
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(userContext));
@@ -25,6 +69,9 @@ namespace ECommerce.Clases
             }
         }
 
+        /// <summary>
+        /// Crea usuarios en el aplicativo
+        /// </summary>
         public static void CheckSuperUser()
         {
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(userContext));
@@ -53,6 +100,12 @@ namespace ECommerce.Clases
             userManager.AddToRole(userASP.Id, roleName);
         }
 
+        /// <summary>
+        /// Crea usuario en la tabla net user
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="roleName"></param>
+        /// <param name="password"></param>
         public static void CreateUserASP(string email, string roleName, string password)
         {
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(userContext));
@@ -67,6 +120,11 @@ namespace ECommerce.Clases
             userManager.AddToRole(userASP.Id, roleName);
         }
 
+        /// <summary>
+        /// Recuperacion de contraseña
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public static async Task PasswordRecovery(string email)
         {
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(userContext));
@@ -101,6 +159,9 @@ namespace ECommerce.Clases
             await MailHelper.SendMail(email, subject, body);
         }
 
+        /// <summary>
+        /// Cierra conexiones a BD
+        /// </summary>
         public void Dispose()
         {
             userContext.Dispose();
