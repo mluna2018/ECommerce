@@ -14,7 +14,7 @@ namespace ECommerce.Clases
         private static ApplicationDbContext userContext = new ApplicationDbContext();
         private static ECommerceContext db = new ECommerceContext();
 
-        public void CheckRole(string roleName)
+        public static void CheckRole(string roleName)
         {
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(userContext));
 
@@ -76,7 +76,7 @@ namespace ECommerce.Clases
                 return;
             }
 
-            var user = db.TaxPaers.Where(tp => tp.UserName == email).FirstOrDefault();
+            var user = db.Users.Where(tp => tp.UserName == email).FirstOrDefault();
             if (user == null)
             {
                 return;
