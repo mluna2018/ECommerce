@@ -31,6 +31,16 @@ namespace ECommerce.Clases
             });
 
             return cities.OrderBy(d => d.Nombre).ToList();
+        }public static List<Company> GetCompanies()
+        {
+            var companies = db.Companies.ToList();
+            companies.Add(new Company
+            {
+                CompanyId  = 0,
+                Name = "[Seleccione una Compañia...]"
+            });
+
+            return companies.OrderBy(d => d.Name).ToList();
         }
 
         public void Dispose()

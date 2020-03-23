@@ -62,7 +62,7 @@ namespace ECommerce.Controllers
                     ex.InnerException.InnerException != null &&
                     ex.InnerException.InnerException.Message.Contains("_Index"))
                     {
-                        ModelState.AddModelError(string.Empty, "El registro ya existe.");
+                        ModelState.AddModelError(string.Empty, "Ya existe un registro con el mismo valor.");
                     }
                     else
                     {

@@ -43,7 +43,7 @@ namespace ECommerce.Controllers
 
             ViewBag.DepartmentId = new SelectList(
                 CombosHelper.GetDepartments(),
-                "DepartmentId", 
+                "DepartmentId",
                 "Nombre");
             return View();
         }
@@ -58,14 +58,30 @@ namespace ECommerce.Controllers
             if (ModelState.IsValid)
             {
                 db.Cities.Add(city);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    if (ex.InnerException != null &&
+                     ex.InnerException.InnerException != null &&
+                     ex.InnerException.InnerException.Message.Contains("_Index"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe un registro con el mismo valor.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, ex.Message);
+                    }
+                }
             }
 
             ViewBag.DepartmentId = new SelectList(
-                CombosHelper.GetDepartments(), 
-                "DepartmentId", 
-                "Nombre", 
+                CombosHelper.GetDepartments(),
+                "DepartmentId",
+                "Nombre",
                 city.DepartmentId);
             return View(city);
         }
