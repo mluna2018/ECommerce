@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 using System.Web;
 
 namespace ECommerce.Models
@@ -46,5 +44,6 @@ namespace ECommerce.Models
         public virtual Department Department { get; set; }
         public virtual City City { get; set; }
         public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<Category> Categories { get; set; }
     }
 }
