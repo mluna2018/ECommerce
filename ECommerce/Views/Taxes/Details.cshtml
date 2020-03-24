@@ -1,4 +1,4 @@
-﻿@model ECommerce.Models.Category
+﻿@model ECommerce.Models.Tax
 
 @{
     ViewBag.Title = "Detalles";
@@ -7,7 +7,7 @@
     <h2>Detalles</h2>
 
 <div>
-    <h4>Categoria</h4>
+    <h4>Impuesto</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -26,9 +26,17 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Rate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rate)
+        </dd>
+
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Editar", "Edit", new { id = Model.CategoryId }, new { @class = "btn btn-warning" }) |
+    @Html.ActionLink("Editar", "Edit", new { id = Model.TaxId }, new { @class = "btn btn-warning" }) |
     @Html.ActionLink("ver lista", "Index", new { }, new { @class = "btn btn-primary" })
 </p>
