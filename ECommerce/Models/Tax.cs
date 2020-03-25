@@ -26,10 +26,10 @@ namespace ECommerce.Models
 
         [Required(ErrorMessage = "El campo  {0} es requerido.")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar un {0}")]
-        [Index("Tax_CompanyId_Description_Index", 1                                                , IsUnique = true)]
+        [Index("Tax_CompanyId_Description_Index", 1, IsUnique = true)]
         [Display(Name = "Compañia")]
         public int CompanyId { get; set; }
-
         public virtual Company Company { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

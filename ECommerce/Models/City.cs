@@ -19,7 +19,6 @@ namespace ECommerce.Models
 
         [Required(ErrorMessage = "El campo  {0} es requerido.")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe seleccionar un dpto.")]
-
         [Index("City_Nombre_Index", 1, IsUnique = true)]
         public int DepartmentId { get; set; }
 
