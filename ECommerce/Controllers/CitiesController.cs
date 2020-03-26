@@ -54,7 +54,7 @@ namespace ECommerce.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CityId,Nombre,DepartmentId")] City city)
+        public ActionResult Create(City city)
         {
             if (ModelState.IsValid)
             {
