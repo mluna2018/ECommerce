@@ -14,7 +14,7 @@ namespace ECommerce.Models
 
         [Required(ErrorMessage = "El campo  {0} es requerido.")]
         [MaxLength(50, ErrorMessage = "El campo {0} debe tener maximo {1} caracteres.")]
-        [Display(Name = "Impuesto")]
+        [Display(Name = "Descripcion")]
         [Index("Tax_CompanyId_Description_Index", 2, IsUnique = true)]
         public string Description { get; set; }
 

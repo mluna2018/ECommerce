@@ -54,6 +54,7 @@ namespace ECommerce.Models
         public HttpPostedFileBase ImageFile { get; set; }
 
         [DataType(DataType.MultilineText)]
+        [Display(Name = "Comentarios")]
         public string Remarks { get; set; }
 
         public virtual Company Company { get; set; }
