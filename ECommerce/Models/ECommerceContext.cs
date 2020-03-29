@@ -35,5 +35,7 @@ namespace ECommerce.Models
 
         public DbSet<Warehouse> Warehouses { get; set; }
         public DbSet<Inventory> Inventories { get; set; }
+
+        public System.Data.Entity.DbSet<ECommerce.Models.Customer> Customers { get; set; }
     }
 }
